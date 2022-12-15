@@ -16,6 +16,14 @@ const router = createRouter({
         {
             path: '/about',
             component: () => import('../views/about/index.vue')
+        },
+        {
+            path: '/files',
+            component: () => import('../views/files/index.vue')
+        },
+        {
+            path: '/message',
+            component: () => import('../views/message/index.vue')
         }
     ]
 })
