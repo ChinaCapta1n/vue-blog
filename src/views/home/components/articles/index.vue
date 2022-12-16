@@ -2,11 +2,23 @@
     <div class="articles" id="article-section">
         <ul class="article-wrapper">
             <li class="article-item" v-for="(article, index) in articleData">
-                <div class="summary-img"></div>
+                <div class="summary-img">
+                    <img :src="article.imgCover" alt="">
+                </div>
                 <div class="summary-text">
-                    <p>{{ article.craetedAt }}</p>
-                    <h2>{{ article.title }}</h2>
+                    <p class="summary-createdAt">{{ article.craetedAt }}</p>
+                    <h2 class="summary-title">
+                        <router-link :to="article.title">
+                            {{ article.title }}
+                        </router-link>
+                    </h2>
                     <p class="article-summary">{{ article.summary }}</p>
+                    <p class="summary-tags">
+                        <span>{{ article.category }}</span>|<span>{{ article.tag }}</span><span>{{ article.views
+                        }}</span><span>{{ article.comments }}</span><span>{{
+        article.likes
+}}</span>
+                    </p>
                 </div>
             </li>
         </ul>
@@ -18,56 +30,84 @@ const articleData = [
         "id": 0,
         "title": "文章一",
         "craetedAt": "2022-05-16",
-        "category": "学习笔记",
-        "language": "Vue",
+        "category": "前端",
+        "tag": "html",
+        "views": 11,
+        "comments": 1,
+        "likes": 1,
+        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
         "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     },
     {
         "id": 1,
-        "title": "文章一",
+        "title": "文章二",
         "craetedAt": "2022-05-16",
-        "category": "学习笔记",
-        "language": "Vue",
+        "category": "前端",
+        "tag": "html",
+        "views": 11,
+        "comments": 1,
+        "likes": 1,
+        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
         "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     },
     {
         "id": 2,
-        "title": "文章一",
+        "title": "文章三",
         "craetedAt": "2022-05-16",
-        "category": "学习笔记",
-        "language": "Vue",
+        "category": "前端",
+        "tag": "html",
+        "views": 11,
+        "comments": 1,
+        "likes": 1,
+        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
         "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     },
     {
         "id": 3,
-        "title": "文章一",
+        "title": "文章四",
         "craetedAt": "2022-05-16",
-        "category": "学习笔记",
-        "language": "Vue",
+        "category": "前端",
+        "tag": "html",
+        "views": 11,
+        "comments": 1,
+        "likes": 1,
+        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
         "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     },
     {
         "id": 4,
-        "title": "文章一",
+        "title": "文章五",
         "craetedAt": "2022-05-16",
-        "category": "学习笔记",
-        "language": "Vue",
+        "category": "前端",
+        "tag": "html",
+        "views": 11,
+        "comments": 1,
+        "likes": 1,
+        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
         "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     },
     {
         "id": 5,
-        "title": "文章一",
+        "title": "文章六",
         "craetedAt": "2022-05-16",
-        "category": "学习笔记",
-        "language": "Vue",
+        "category": "前端",
+        "tag": "html",
+        "views": 11,
+        "comments": 1,
+        "likes": 1,
+        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
         "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     },
     {
         "id": 6,
-        "title": "文章一",
+        "title": "文章七",
         "craetedAt": "2022-05-16",
-        "category": "学习笔记",
-        "language": "Vue",
+        "category": "前端",
+        "tag": "html",
+        "views": 11,
+        "comments": 1,
+        "likes": 1,
+        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
         "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     },
 ]
@@ -75,14 +115,101 @@ const articleData = [
 </script>
 <style lang="less" scoped>
 .articles {
+    padding: 0 2rem;
+    position: relative;
+    padding-top: 10rem;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        height: calc(100% + 10rem);
+        top: -10rem;
+        transform: translateX(-50%);
+        width: 1px;
+        background-color: rgb(236, 228, 228);
+        z-index: -1;
+    }
+
     .article-wrapper {
         display: flex;
         flex-direction: column;
+        max-width: 1200px;
+        margin: 0 auto;
 
         .article-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10rem;
+
+            &:hover .summary-img {
+                transform: scale(0.99);
+                transition: transform .5s;
+            }
+
+            &:nth-child(even) {
+                flex-direction: row-reverse;
+
+                .summary-text {
+                    margin-right: -2rem;
+                    padding: 5rem 10rem 5rem 8rem;
+                }
+            }
+
+            &:nth-child(odd) {
+                .summary-text {
+                    padding: 5rem 8rem 5rem 10rem;
+                    margin-left: -2rem;
+                }
+            }
+
+            .summary-img {
+                width: 700px;
+                overflow: hidden;
+                z-index: 2;
+
+                img {
+                    width: 100%;
+                    border-radius: 0.7rem;
+                    object-fit: cover;
+                }
+            }
+
             .summary-text {
+                width: 500px;
+                height: 300px;
+                border: 1px solid rgb(236, 228, 228);
+                border-radius: 0.7rem;
+                background-color: #fff;
+
+                .summary-createdAt {
+                    color: rgb(167, 159, 159);
+                    font-size: 1.3rem;
+                    margin-bottom: 1rem;
+                }
+
+                .summary-title {
+                    font-size: 1.8rem;
+                    margin-bottom: 1rem;
+                }
+
                 .article-summary {
                     word-wrap: break-word;
+                    font-size: 1.6rem;
+                    color: grey;
+                }
+            }
+
+            .summary-tags {
+                margin-top: 4rem;
+
+                span {
+                    display: inline-block;
+                    margin: 0 0.5rem;
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
                 }
             }
         }

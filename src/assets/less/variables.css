@@ -1,3 +1,6 @@
 :root {
     --primary-color: #fff;
+    
+    /* breakpoint */
+    --max-width: 1024px;
 }

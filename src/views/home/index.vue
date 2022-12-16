@@ -8,8 +8,7 @@
     </div>
 </template>
 <script setup>
-import BannerBackground from './components/banner/index.vue';
-// import ArrowDowm from './components/arrow-down/index.vue';
+import BannerBackground from './components/banner/index.vue';;
 import HomeArticles from './components/articles/index.vue';
 
 </script>

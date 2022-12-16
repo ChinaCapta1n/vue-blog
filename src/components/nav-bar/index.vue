@@ -2,7 +2,7 @@
 	<nav class="nav">
 		<logo />
 		<ul class="nav-list">
-			<li v-for="(nav, index) in navData">
+			<li v-for="(nav, index) in navData" :key="nav.id">
 				<router-link :to="nav.path" @click="navClickFn" @mouseover="navClickFn" @mouseout="navMouseOutFn">
 					{{ nav.text }}
 				</router-link>
@@ -33,7 +33,6 @@ const navMouseOutFn = () => {
 }
 
 onMounted(() => {
-
 	setTimeout(() => {
 		getStyles();
 	}, 0)
