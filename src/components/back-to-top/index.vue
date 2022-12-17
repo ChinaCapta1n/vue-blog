@@ -8,7 +8,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const backTop = ref(null);
 
 const scrollNum = () => {
-    const height = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
     if (height > 400) {
         backTop.value.classList.add('show');
@@ -18,7 +18,7 @@ const scrollNum = () => {
 }
 
 const backToTopFn = () => {
-    const height = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
     if (height > 0) {
         window.requestAnimationFrame(backToTopFn);
