@@ -1,8 +1,8 @@
 <template>
 	<nav class="nav" :class="topScroll === true ? 'show-or-hide' : '', backgroundFff === true ? 'backgroundFFF' : ''">
 		<logo />
-		<ul class="nav-list">
-			<li v-for="(nav, index) in navData" :key="nav.id">
+		<ul class="nav-list" :class="navListShow === true ? 'show' : ''">
+			<li v-for="(nav, index) in navData" :key="nav.id" @click.prevent="handleHamburgerFn">
 				<router-link :class="backgroundFff === true ? 'toGrey' : ''" :to="nav.path" @click="navClickFn"
 					@mouseover="navClickFn" @mouseout="navMouseOutFn">
 					<van-icon :name="nav.icon" />
@@ -11,6 +11,11 @@
 			</li>
 			<span class="undeline"></span>
 		</ul>
+		<div :class="threeLine === true ? 'active' : ''" class="hamburger" @click.prevent="handleHamburgerFn">
+			<span class="line line-1"></span>
+			<span class="line line-2"></span>
+			<span class="line line-3"></span>
+		</div>
 	</nav>
 </template>
   
@@ -28,6 +33,23 @@ let scrollTop = ref('');
 let topScroll = ref(false);
 let pageHeight = ref(0);
 let backgroundFff = ref(false);
+
+// hamburger
+let threeLine = ref(false);
+
+// nav-list
+let navListShow = ref(false);
+
+// hamburger function
+const handleHamburgerFn = () => {
+	if (threeLine.value === true) {
+		threeLine.value = false;
+		navListShow.value = false;
+	} else {
+		threeLine.value = true;
+		navListShow.value = true;
+	}
+}
 
 const getStyles = () => {
 	undelineWidth.value = getComputedStyle(document.querySelector('.router-link-active'), null)["width"];
@@ -48,6 +70,8 @@ const handleScrollFn = () => {
 	pageHeight.value = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 	scrollTop.value = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 }
+
+
 
 watch(scrollTop, (newValue, oldValue) => {
 
@@ -123,13 +147,13 @@ const navData = [
 
 
 	position: fixed;
-	width: 100%;
+	width: 100vw;
 
 	transition: all .5s;
 
-	// @media only screen and (max-width: 1920px) {
-	// 	padding: 3rem;
-	// }
+	@media screen and (max-width: 640px) {
+		padding: 2rem 3rem;
+	}
 
 	&.backgroundFFF {
 		background: hsla(0, 0%, 100%, .8);
@@ -180,6 +204,77 @@ const navData = [
 				&.toGrey {
 					color: rgb(153, 153, 153)
 				}
+			}
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		.nav-list {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			// height: 100vh;
+			height: 0;
+			overflow: hidden;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			transition: all .3s;
+			background-color: #fff;
+			// transform: translateY(-110%);
+
+			&.show {
+				// transform: translateY(0);
+				height: 100vh;
+			}
+
+			li {
+				margin-bottom: 3rem;
+
+				a {
+					color: #000;
+				}
+			}
+		}
+	}
+
+	.hamburger {
+		width: 2.5rem;
+		height: 1.5rem;
+		z-index: 2;
+		cursor: pointer;
+		display: none;
+
+		.line {
+			width: 100%;
+			height: 1px;
+			background-color: #000;
+			display: block;
+			transition: all .5s;
+			margin-bottom: 0.6rem;
+		}
+
+		@media screen and (max-width: 768px) {
+			display: block;
+		}
+
+		&.active {
+			.line-2 {
+				transform: translate(1rem);
+				opacity: 0;
+			}
+
+			.line-1 {
+				transform-origin: left bottom;
+				transform: rotate(45deg);
+				margin-bottom: 1rem;
+			}
+
+			.line-3 {
+				transform-origin: left top;
+				transform: rotate(-45deg);
+				margin-bottom: 1rem;
 			}
 		}
 	}

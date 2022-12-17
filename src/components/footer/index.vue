@@ -13,6 +13,7 @@
     justify-content: center;
     align-items: center;
     padding: 5rem 0;
+    width: 100%;
 
     p {
         color: rgb(156, 134, 134);

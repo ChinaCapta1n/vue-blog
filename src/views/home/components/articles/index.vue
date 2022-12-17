@@ -242,6 +242,32 @@ const articleData = [
                 }
             }
         }
+
+        @media screen and (max-width: 1150px) {
+            .article-item {
+
+                &:nth-child(even),
+                &:nth-child(odd) {
+                    flex-direction: column;
+                    margin-bottom: 2rem;
+
+                    .summary-img,
+                    .summary-text {
+                        width: 100%;
+                    }
+
+                    .summary-text {
+                        margin-left: 0;
+                        border: none;
+                        border-bottom: 1px solid rgb(238, 228, 228);
+                        padding: 0;
+                        padding-top: 4rem;
+                        padding-bottom: 4rem;
+                        height: auto;
+                    }
+                }
+            }
+        }
     }
 }
 </style> 
