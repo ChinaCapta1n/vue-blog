@@ -5,6 +5,7 @@
 			<li v-for="(nav, index) in navData" :key="nav.id">
 				<router-link :class="backgroundFff === true ? 'toGrey' : ''" :to="nav.path" @click="navClickFn"
 					@mouseover="navClickFn" @mouseout="navMouseOutFn">
+					<van-icon :name="nav.icon" />
 					{{ nav.text }}
 				</router-link>
 			</li>
@@ -88,22 +89,26 @@ const navData = [
 	{
 		"id": 0,
 		"text": "主页",
-		"path": "/home"
+		"path": "/home",
+		"icon": "diamond-o"
 	},
 	{
 		"id": 1,
 		"text": "关于",
-		"path": "/about"
+		"path": "/about",
+		"icon": "guide-o"
 	},
 	{
 		"id": 2,
 		"text": "归档",
-		"path": "/files"
+		"path": "/files",
+		"icon": "label-o"
 	},
 	{
 		"id": 3,
 		"text": "留言板",
-		"path": "/message"
+		"path": "/message",
+		"icon": "comment-o"
 	}
 ]
 </script>

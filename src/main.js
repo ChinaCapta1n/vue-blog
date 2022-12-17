@@ -13,6 +13,9 @@ import router from './router';
 // console text
 import './utils/console.js';
 
+// vant
+import { Icon } from 'vant';
+
 // font-awesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faHatWizard } from '@fortawesome/free-solid-svg-icons';
@@ -20,4 +23,4 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faHatWizard);
 
 
-createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(router).mount('#luffy');
+createApp(App).use(Icon).component('font-awesome-icon', FontAwesomeIcon).use(router).mount('#luffy');
