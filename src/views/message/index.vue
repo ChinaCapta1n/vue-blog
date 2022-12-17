@@ -1,9 +1,11 @@
 <template>
     <div class="message">
-        message
+        <banner />
     </div>
 </template>
-<script setup></script>
+<script setup>
+import banner from '../../components/banner/index.vue';
+</script>
 <style scoped>
 
 </style>

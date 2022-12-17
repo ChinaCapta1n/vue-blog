@@ -4,6 +4,8 @@
 </template>
 <script setup>
 import ArrowDown from '../arrow-down/index.vue';
+
+
 </script>
 <style lang="less" scoped>
 .banner-background {

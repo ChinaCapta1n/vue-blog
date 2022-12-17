@@ -5,6 +5,7 @@ import App from './App.vue';
 import './assets/less/variables.css';
 import './assets/less/reset.less';
 import './assets/less/normalize.less';
+import './assets/less/van-config-provider.css';
 
 // vue-router
 import router from './router';

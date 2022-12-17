@@ -1,9 +1,23 @@
 <template>
     <footer class="footer">
-        footer
+        <p>&copy; Luffy's blog</p>
     </footer>
-  </template>
+</template>
   
-  <script setup></script>
+<script setup></script>
   
-  <style scoped></style>
+<style lang="less" scoped>
+.footer {
+    background-color: #2d3237;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 0;
+
+    p {
+        color: rgb(156, 134, 134);
+        font-size: 1.6rem;
+        user-select: none;
+    }
+}
+</style>

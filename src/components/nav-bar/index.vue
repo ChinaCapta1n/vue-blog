@@ -13,10 +13,12 @@
 </template>
   
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import Logo from './components/logo/index.vue';
-let undelineLeft = ref();
-let undelineWidth = ref();
+
+let undelineLeft = ref(null);
+let undelineWidth = ref(null);
+let timer = ref(null);
 
 const getStyles = () => {
 	undelineWidth.value = getComputedStyle(document.querySelector('.router-link-active'), null)["width"];
@@ -33,9 +35,13 @@ const navMouseOutFn = () => {
 }
 
 onMounted(() => {
-	setTimeout(() => {
+	timer.value = setTimeout(() => {
 		getStyles();
-	}, 0)
+	}, 100)
+})
+
+onUnmounted(() => {
+	clearTimeout(timer.value);
 })
 
 

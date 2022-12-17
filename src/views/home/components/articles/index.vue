@@ -1,7 +1,7 @@
 <template>
     <div class="articles" id="article-section">
         <ul class="article-wrapper">
-            <li class="article-item" v-for="(article, index) in articleData">
+            <li ref="singleArticle" class="article-item" v-for="(article, index) in articleData">
                 <div class="summary-img">
                     <img :src="article.imgCover" alt="">
                 </div>
@@ -25,6 +25,23 @@
     </div>
 </template>
 <script setup>
+import { ref, onMounted } from 'vue';
+const singleArticle = ref(null);
+
+onMounted(() => {
+    const oberser = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
+        });
+    })
+
+    singleArticle.value.forEach(el => {
+        oberser.observe(el);
+    })
+})
+
 const articleData = [
     {
         "id": 0,
@@ -141,6 +158,10 @@ const articleData = [
             display: flex;
             align-items: center;
             margin-bottom: 10rem;
+            opacity: 0;
+            transition: all 1s;
+
+
 
             &:hover .summary-img {
                 transform: scale(0.99);
@@ -149,6 +170,7 @@ const articleData = [
 
             &:nth-child(even) {
                 flex-direction: row-reverse;
+                transform: translate(50px);
 
                 .summary-text {
                     margin-right: -2rem;
@@ -157,10 +179,17 @@ const articleData = [
             }
 
             &:nth-child(odd) {
+                transform: translate(-50px);
+
                 .summary-text {
                     padding: 5rem 8rem 5rem 10rem;
                     margin-left: -2rem;
                 }
+            }
+
+            &.show {
+                opacity: 1;
+                transform: translateX(0px);
             }
 
             .summary-img {
@@ -215,4 +244,4 @@ const articleData = [
         }
     }
 }
-</style>
+</style> 
