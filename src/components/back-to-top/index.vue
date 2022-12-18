@@ -1,6 +1,6 @@
 <template>
     <div class="back-to-top" ref="backTop" @click="backToTopFn">
-
+        <img src="../../../public/rocket.png" alt="">
     </div>
 </template>
 <script setup>
@@ -50,16 +50,19 @@ onUnmounted(() => {
     bottom: 4rem;
     width: 6rem;
     height: 6rem;
-    background-color: pink;
     opacity: 0;
-    transform: translateX(10rem);
-    transition: all .5s;
+    transform: translateX(10rem) rotate(400deg);
+    transition: all .6s ease-in-out;
     z-index: 101;
     cursor: pointer;
 
+    img {
+        width: 100%;
+    }
+
     &.show {
         opacity: 1;
-        transform: translateX(0rem);
+        transform: translateX(0rem) rotate(0);
     }
 }
 </style>

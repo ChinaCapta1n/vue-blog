@@ -1,0 +1,26 @@
+[
+	{
+		"id": 0,
+		"text": "主页",
+		"path": "/home",
+		"icon": "diamond-o"
+	},
+	{
+		"id": 1,
+		"text": "关于",
+		"path": "/about",
+		"icon": "guide-o"
+	},
+	{
+		"id": 2,
+		"text": "归档",
+		"path": "/files",
+		"icon": "label-o"
+	},
+	{
+		"id": 3,
+		"text": "留言板",
+		"path": "/message",
+		"icon": "comment-o"
+	}
+]

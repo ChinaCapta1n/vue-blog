@@ -22,6 +22,10 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import Logo from './components/logo/index.vue';
+import { API_nav } from '../../api/api.js';
+
+// nav data
+let navData = ref(null);
 
 // underline
 let undelineLeft = ref(null);
@@ -92,6 +96,10 @@ watch(scrollTop, (newValue, oldValue) => {
 
 
 onMounted(() => {
+	// nav data
+	API_nav().then(res => {
+		navData.value = res;
+	})
 	// scroll bar
 	pageHeight.value = window.innerHeight;
 	window.addEventListener("scroll", handleScrollFn);
@@ -99,7 +107,7 @@ onMounted(() => {
 	// underline
 	timer.value = setTimeout(() => {
 		getStyles();
-	}, 100)
+	}, 300)
 })
 
 onUnmounted(() => {
@@ -107,34 +115,6 @@ onUnmounted(() => {
 	window.removeEventListener("scroll", handleScrollFn);
 })
 
-
-
-const navData = [
-	{
-		"id": 0,
-		"text": "主页",
-		"path": "/home",
-		"icon": "diamond-o"
-	},
-	{
-		"id": 1,
-		"text": "关于",
-		"path": "/about",
-		"icon": "guide-o"
-	},
-	{
-		"id": 2,
-		"text": "归档",
-		"path": "/files",
-		"icon": "label-o"
-	},
-	{
-		"id": 3,
-		"text": "留言板",
-		"path": "/message",
-		"icon": "comment-o"
-	}
-]
 </script>
   
 <style lang="less" scoped>
