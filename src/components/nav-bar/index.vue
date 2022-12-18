@@ -22,7 +22,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import Logo from './components/logo/index.vue';
-import { API_nav } from '../../api/api.js';
+import { API_nav } from '../../api';
 
 // nav data
 let navData = ref(null);

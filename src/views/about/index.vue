@@ -1,6 +1,6 @@
 <template>
     <div class="about">
-        <banner />
+        <banner :backgroundImage="getAssetUrl('component-banner/2.jpg')" />
         <section class="about-wrapper">
             <h2 class="I_Luffy">{{ detailData[0].h2.text }}</h2>
             <ul class="My_Self_Introduction">
@@ -17,15 +17,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import banner from '../../components/banner/index.vue';
-import { API_about } from '../../api/api.js';
+import { API_about } from '../../api';
+import { getAssetUrl } from '../../utils/get_assets_img';
 
 const detailData = ref(null);
 
-(() => {
-    API_about().then(res => {
-        detailData.value = res;
-    })
-})();
+API_about().then(res => {
+    detailData.value = res;
+})
 
 // onMounted(async () => {
 //     detailData.value = await API_about();

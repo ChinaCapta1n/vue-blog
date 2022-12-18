@@ -13,13 +13,9 @@ defineProps({
 </script>
 <style lang="less" scoped>
 .banner-img {
-    padding-bottom: 20%;
-    position: relative;
+    height: 25vh;
 
     img {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;

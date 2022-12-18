@@ -1,9 +1,12 @@
 <template>
-    <div class="article">
-        article
+    <div class="detail">
+        <banner />
+        article-detail
     </div>
 </template>
-<script setup></script>
+<script setup>
+import banner from '../../components/banner/index.vue';
+</script>
 <style lang="less" scoped>
 
 </style>
