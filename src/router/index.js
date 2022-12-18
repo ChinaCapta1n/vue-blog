@@ -24,6 +24,10 @@ const router = createRouter({
         {
             path: '/message',
             component: () => import('../views/message/index.vue')
+        },
+        {
+            path: '/detail/:id',
+            component: () => import('../views/detail/index.vue')
         }
     ]
 })

@@ -56,8 +56,12 @@ const handleHamburgerFn = () => {
 }
 
 const getStyles = () => {
-	undelineWidth.value = getComputedStyle(document.querySelector('.router-link-active'), null)["width"];
-	undelineLeft.value = document.querySelector('.router-link-active').offsetLeft + "px";
+	const activeRouter = document.querySelector('.router-link-active');
+	if (activeRouter && true) {
+		undelineWidth.value = getComputedStyle(activeRouter, null)["width"];
+		undelineLeft.value = activeRouter.offsetLeft + "px";
+	}
+
 }
 
 const navClickFn = e => {
@@ -99,15 +103,17 @@ onMounted(() => {
 	// nav data
 	API_nav().then(res => {
 		navData.value = res;
+
+		// underline
+		timer.value = setTimeout(() => {
+			getStyles();
+		}, 800)
 	})
 	// scroll bar
 	pageHeight.value = window.innerHeight;
 	window.addEventListener("scroll", handleScrollFn);
 
-	// underline
-	timer.value = setTimeout(() => {
-		getStyles();
-	}, 300)
+
 })
 
 onUnmounted(() => {
@@ -194,7 +200,6 @@ onUnmounted(() => {
 			top: 0;
 			left: 0;
 			width: 100%;
-			// height: 100vh;
 			height: 0;
 			overflow: hidden;
 			flex-direction: column;
@@ -202,11 +207,17 @@ onUnmounted(() => {
 			justify-content: center;
 			transition: all .3s;
 			background-color: #fff;
-			// transform: translateY(-110%);
 
 			&.show {
-				// transform: translateY(0);
 				height: 100vh;
+
+				li {
+					transition: all .3s;
+				}
+
+				li:hover {
+					transform: translateX(1rem);
+				}
 			}
 
 			li {

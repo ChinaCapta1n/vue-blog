@@ -8,7 +8,7 @@
                 <div class="summary-text">
                     <p class="summary-createdAt">{{ article.craetedAt }}</p>
                     <h2 class="summary-title">
-                        <router-link :to="article.title">
+                        <router-link :to="'/detail/' + article.id">
                             {{ article.title }}
                         </router-link>
                     </h2>
