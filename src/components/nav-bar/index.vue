@@ -21,28 +21,31 @@
   
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+import useFlags from '../../stores/module/flags.js';
 import Logo from './components/logo/index.vue';
 import { API_nav } from '../../api';
 
 // nav data
-let navData = ref(null);
+const navData = ref(null);
 
 // underline
-let undelineLeft = ref(null);
-let undelineWidth = ref(null);
-let timer = ref(null);
+const undelineLeft = ref(null);
+const undelineWidth = ref(null);
+const timer = ref(null);
 
 // scroll bar
-let scrollTop = ref('');
-let topScroll = ref(false);
-let pageHeight = ref(0);
-let backgroundFff = ref(false);
+const scrollTop = ref('');
+const store = useFlags();
+const { topScroll } = storeToRefs(store);
+const pageHeight = ref(0);
+const backgroundFff = ref(false);
 
 // hamburger
-let threeLine = ref(false);
+const threeLine = ref(false);
 
 // nav-list
-let navListShow = ref(false);
+const navListShow = ref(false);
 
 // hamburger function
 const handleHamburgerFn = () => {
@@ -85,9 +88,9 @@ watch(scrollTop, (newValue, oldValue) => {
 
 	if (newValue > 0) {
 		if (newValue > oldValue) {
-			topScroll.value = true;
+			store.setTopScroll(true);
 		} else {
-			topScroll.value = false;
+			store.setTopScroll(false);
 		}
 	}
 
@@ -112,8 +115,6 @@ onMounted(() => {
 	// scroll bar
 	pageHeight.value = window.innerHeight;
 	window.addEventListener("scroll", handleScrollFn);
-
-
 })
 
 onUnmounted(() => {

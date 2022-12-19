@@ -8,7 +8,7 @@
                 <div class="summary-text">
                     <p class="summary-createdAt">{{ article.craetedAt }}</p>
                     <h2 class="summary-title">
-                        <router-link :to="'/detail/' + article.id">
+                        <router-link :to="'/detail/' + article.id" @click="showNav">
                             {{ article.title }}
                         </router-link>
                     </h2>
@@ -26,7 +26,15 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
+import useFlags from '../../../../stores/module/flags';
 const singleArticle = ref(null);
+
+const store = useFlags();
+
+const showNav = () => {
+    store.setTopScroll(false);
+}
+
 
 onMounted(() => {
     const oberser = new IntersectionObserver((entries) => {

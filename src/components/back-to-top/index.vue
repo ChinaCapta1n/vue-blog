@@ -6,11 +6,13 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 const backTop = ref(null);
+const scrollHeight = ref(0);
+const timer = ref(null);
 
 const scrollNum = () => {
-    const height = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    scrollHeight.value = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
-    if (height > 400) {
+    if (scrollHeight.value > 400) {
         backTop.value.classList.add('show');
     } else {
         backTop.value.classList.remove('show');
@@ -18,12 +20,11 @@ const scrollNum = () => {
 }
 
 const backToTopFn = () => {
-    const height = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
-    if (height > 0) {
+    if (scrollHeight.value > 0) {
         window.requestAnimationFrame(backToTopFn);
 
-        window.scrollTo(0, height - height / 12);
+        window.scrollTo(0, scrollHeight.value - scrollHeight.value / 12);
     } else {
         return false;
     }

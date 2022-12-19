@@ -10,6 +10,7 @@
 </template>
 <script setup>
 import { goAnchor } from '../../../../utils/go_anchor_fn';
+
 </script>
 <style lang="less" scoped>
 .home-arrow-down {

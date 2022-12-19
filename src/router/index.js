@@ -28,8 +28,19 @@ const router = createRouter({
         {
             path: '/detail/:id',
             component: () => import('../views/detail/index.vue')
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            component: () => import('../views/not-found/index.vue')
         }
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    if(to.path != from.path) {
+        window.scrollTo(0, 0);
+    }
+    next();
 })
 
 export default router;

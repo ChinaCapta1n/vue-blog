@@ -11,6 +11,7 @@
 import BannerBackground from './components/banner/index.vue';;
 import HomeArticles from './components/articles/index.vue';
 
+
 </script>
 <style lang="less" scoped>
 .home {
