@@ -11,3 +11,9 @@ export const API_about = params => {
     let url = '/about.json';
     return get(url, params);
 }
+
+// articles
+export const API_articles = params => {
+    let url = '/articles.json';
+    return get(url, params);
+}

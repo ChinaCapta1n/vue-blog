@@ -2,13 +2,14 @@
     <div class="articles" id="article-section">
         <ul class="article-wrapper">
             <li ref="singleArticle" class="article-item" v-for="(article, index) in articleData">
+
                 <div class="summary-img">
                     <img :src="article.imgCover" alt="">
                 </div>
                 <div class="summary-text">
                     <p class="summary-createdAt">{{ article.craetedAt }}</p>
                     <h2 class="summary-title">
-                        <router-link :to="'/detail/' + article.id" @click="showNav">
+                        <router-link :to="'/detail/' + article.article" @click="showNav">
                             {{ article.title }}
                         </router-link>
                     </h2>
@@ -26,7 +27,11 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
+import { API_articles } from '../../../../api/index.js'
 import useFlags from '../../../../stores/module/flags';
+import gsap from 'gsap';
+
+const articleData = ref([]);
 const singleArticle = ref(null);
 
 const store = useFlags();
@@ -35,107 +40,30 @@ const showNav = () => {
     store.setTopScroll(false);
 }
 
-
-onMounted(() => {
-    const oberser = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-            }
-        });
-    })
-
-    singleArticle.value.forEach(el => {
-        oberser.observe(el);
-    })
+API_articles().then(res => {
+    articleData.value = res;
 })
 
-const articleData = [
-    {
-        "id": 0,
-        "title": "文章一",
-        "craetedAt": "2022-05-16",
-        "category": "前端",
-        "tag": "html",
-        "views": 11,
-        "comments": 1,
-        "likes": 1,
-        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
-        "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    },
-    {
-        "id": 1,
-        "title": "文章二",
-        "craetedAt": "2022-05-16",
-        "category": "前端",
-        "tag": "html",
-        "views": 11,
-        "comments": 1,
-        "likes": 1,
-        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
-        "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    },
-    {
-        "id": 2,
-        "title": "文章三",
-        "craetedAt": "2022-05-16",
-        "category": "前端",
-        "tag": "html",
-        "views": 11,
-        "comments": 1,
-        "likes": 1,
-        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
-        "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    },
-    {
-        "id": 3,
-        "title": "文章四",
-        "craetedAt": "2022-05-16",
-        "category": "前端",
-        "tag": "html",
-        "views": 11,
-        "comments": 1,
-        "likes": 1,
-        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
-        "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    },
-    {
-        "id": 4,
-        "title": "文章五",
-        "craetedAt": "2022-05-16",
-        "category": "前端",
-        "tag": "html",
-        "views": 11,
-        "comments": 1,
-        "likes": 1,
-        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
-        "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    },
-    {
-        "id": 5,
-        "title": "文章六",
-        "craetedAt": "2022-05-16",
-        "category": "前端",
-        "tag": "html",
-        "views": 11,
-        "comments": 1,
-        "likes": 1,
-        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
-        "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    },
-    {
-        "id": 6,
-        "title": "文章七",
-        "craetedAt": "2022-05-16",
-        "category": "前端",
-        "tag": "html",
-        "views": 11,
-        "comments": 1,
-        "likes": 1,
-        "imgCover": "https://picx.zhimg.com/v2-9bc6f8d4c64ff51ed3940cec5fca18ff_r.jpg?source=1940ef5c",
-        "summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    },
-]
+
+onMounted(() => {
+
+
+    setTimeout(() => {
+        const oberser = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        })
+
+        singleArticle?.value.forEach(el => {
+            oberser.observe(el);
+        })
+    }, 500)
+
+})
+
 
 </script>
 <style lang="less" scoped>

@@ -40,6 +40,8 @@ onUnmounted(() => {
 
     window.removeEventListener('scroll', scrollNum);
 
+    window.cancelAnimationFrame(backToTopFn)
+
 })
 
 

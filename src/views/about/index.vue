@@ -2,14 +2,14 @@
     <div class="about">
         <banner :backgroundImage="getAssetUrl('component-banner/2.jpg')" />
         <section class="about-wrapper">
-            <h2 class="I_Luffy">{{ detailData[0].h2.text }}</h2>
+            <h2 class="I_Luffy">{{ detailData?.[0].h2.text }}</h2>
             <ul class="My_Self_Introduction">
-                <li v-for="(li, index) in detailData[1].li">
+                <li v-for="(li, index) in detailData?.[1].li">
                     {{ li.text }}
                 </li>
             </ul>
             <p class="last_but_not_least">
-                {{ detailData[2].p[0].text }}
+                {{ detailData?.[2].p[0].text }}
             </p>
         </section>
     </div>
@@ -17,19 +17,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import banner from '../../components/banner/index.vue';
-import { API_about } from '../../api';
+import { API_about } from '../../api/index.js';
 import { getAssetUrl } from '../../utils/get_assets_img';
 
 const detailData = ref(null);
 
-API_about().then(res => {
-    detailData.value = res;
+onMounted(() => {
+    API_about().then(res => {
+        detailData.value = res && res;
+    })
 })
-
-// onMounted(async () => {
-//     detailData.value = await API_about();
-//     console.log(detailData.value)
-// })
 </script>
 <style lang="less" scoped>
 .about {
