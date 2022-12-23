@@ -13,7 +13,7 @@
                             {{ article.title }}
                         </router-link>
                     </h2>
-                    <p class="article-summary">{{ article.summary }}</p>
+                    <p class="article-summary">{{ summaryFilterFn(article.summary) }}</p>
                     <p class="summary-tags">
                         <span>{{ article.category }}</span>|<span>{{ article.tag }}</span><span>{{ article.views
                         }}</span><span>{{ article.comments }}</span><span>{{
@@ -29,19 +29,30 @@
 import { ref, onMounted } from 'vue';
 import { API_articles } from '../../../../api/index.js'
 import useFlags from '../../../../stores/module/flags';
-import gsap from 'gsap';
+import useArticles from '../../../../stores/module/articles';
 
 const articleData = ref([]);
 const singleArticle = ref(null);
 
 const store = useFlags();
+const articleFilterData = useArticles();
 
 const showNav = () => {
     store.setTopScroll(false);
 }
 
+const summaryFilterFn = summary => {
+    return summary.substring(0, 100);
+}
+
 API_articles().then(res => {
-    articleData.value = res;
+    console.log(articleFilterData.articles)
+    if (articleFilterData.articles.length) {
+        articleData.value = articleFilterData.articles
+    } else {
+        articleData.value = res;
+    }
+
 })
 
 
@@ -49,19 +60,23 @@ onMounted(() => {
 
 
     setTimeout(() => {
-        const oberser = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                }
-            });
-        })
 
-        singleArticle?.value.forEach(el => {
-            oberser.observe(el);
-        })
-    }, 500)
 
+        setTimeout(() => {
+            const oberser = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            })
+
+            singleArticle?.value.forEach(el => {
+                oberser.observe(el);
+            })
+        }, 500)
+
+    })
 })
 
 
@@ -162,6 +177,12 @@ onMounted(() => {
                     word-wrap: break-word;
                     font-size: 1.6rem;
                     color: grey;
+                    word-break: break-all;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
                 }
             }
 

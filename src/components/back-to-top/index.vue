@@ -1,6 +1,6 @@
 <template>
     <div class="back-to-top" ref="backTop" @click="backToTopFn">
-        <img src="../../../public/rocket.png" alt="">
+        <img src="../../../rocket.png" alt="">
     </div>
 </template>
 <script setup>

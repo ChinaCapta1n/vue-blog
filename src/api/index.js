@@ -17,3 +17,9 @@ export const API_articles = params => {
     let url = '/articles.json';
     return get(url, params);
 }
+
+// tags
+export const API_tags = params => {
+    let url = '/articles.json';
+    return get(url, params);
+}

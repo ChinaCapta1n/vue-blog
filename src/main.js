@@ -26,4 +26,5 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faHatWizard);
 
 
+
 createApp(App).use(pinia).use(Icon).component('font-awesome-icon', FontAwesomeIcon).use(router).mount('#luffy');

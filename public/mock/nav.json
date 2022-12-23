@@ -19,8 +19,8 @@
 	},
 	{
 		"id": 3,
-		"text": "留言板",
-		"path": "/message",
+		"text": "标签",
+		"path": "/tags",
 		"icon": "comment-o"
 	}
 ]
