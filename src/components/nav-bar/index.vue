@@ -30,6 +30,7 @@ import { API_nav } from '../../api';
 const navData = ref(null);
 
 // underline
+// const underLine = ref(null);
 const undelineLeft = ref(null);
 const undelineWidth = ref(null);
 const timer = ref(null);
@@ -60,16 +61,25 @@ const handleHamburgerFn = () => {
 
 const getStyles = () => {
 	const activeRouter = document.querySelector('.router-link-active');
+	const underLine = document.querySelector('.undeline');
 	if (activeRouter && true) {
-		undelineWidth.value = getComputedStyle(activeRouter, null)["width"];
-		undelineLeft.value = activeRouter.offsetLeft + "px";
+
+		underLine.style.width = getComputedStyle(activeRouter, null)["width"];
+		underLine.style.left = activeRouter.offsetLeft + "px";
+		// undelineWidth.value = getComputedStyle(activeRouter, null)["width"];
+		// undelineLeft.value = activeRouter.offsetLeft + "px";
 	}
 
 }
 
 const navClickFn = e => {
-	undelineLeft.value = e?.currentTarget?.offsetLeft + "px";
-	undelineWidth.value = getComputedStyle(e.currentTarget, null)["width"];
+
+	const underLine = document.querySelector('.undeline');
+	underLine.style.width = getComputedStyle(e.currentTarget, null)["width"];
+	underLine.style.left = e?.currentTarget?.offsetLeft + "px";
+
+	// undelineLeft.value = e?.currentTarget?.offsetLeft + "px";
+	// undelineWidth.value = getComputedStyle(e.currentTarget, null)["width"];
 }
 
 const navMouseOutFn = () => {
@@ -158,9 +168,9 @@ onUnmounted(() => {
 		.undeline {
 			position: absolute;
 			display: block;
-			width: v-bind(undelineWidth);
+			// width: v-bind(undelineWidth);
 			bottom: -.5rem;
-			left: v-bind(undelineLeft);
+			// left: v-bind(undelineLeft);
 			height: 1px;
 			background-image: repeating-linear-gradient(45deg,
 					#3c5245 0%,

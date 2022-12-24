@@ -60,6 +60,13 @@ const router = useRouter();
 
 const store = useArticles();
 
+const activeLink = () => {
+    const currentActiveLink = document.querySelector('.nav-list li a[href="#/home"]');
+    const underLine = document.querySelector('.nav-list .undeline');
+
+    underLine.style.left = currentActiveLink.offsetLeft + 'px';
+    underLine.style.width = getComputedStyle(currentActiveLink, null)["width"];
+}
 
 const setDataFn = (arg1, arg2) => {
     let data = [];
@@ -75,11 +82,12 @@ const setDataFn = (arg1, arg2) => {
         })
         store.setArticles(filterArticles);
         if (filterArticles.length) {
-            router.push('/home');
+            router.replace('/home');
         } else {
             return;
         }
     })
+    activeLink();
 }
 
 const filterCategoryFn = category => {
@@ -107,9 +115,12 @@ const inputDataFilterFn = async () => {
         })
         store.setArticles(data);
         if (data.length !== 0) {
-            router.push('/home');
+            router.replace('/home');
+        } else {
+            return;
         }
     })
+    ctiveLink();
 }
 
 
