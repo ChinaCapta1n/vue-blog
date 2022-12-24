@@ -22,8 +22,8 @@ const router = createRouter({
             component: () => import('../views/files/index.vue')
         },
         {
-            path: '/tags',
-            component: () => import('../views/tags/index.vue')
+            path: '/search',
+            component: () => import('../views/search/index.vue')
         },
         {
             path: '/detail/:id',

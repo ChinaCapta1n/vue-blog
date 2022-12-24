@@ -1,7 +1,8 @@
 <template>
     <div class="tags-section">
         <div class="search-wrapper">
-            <input class="search-box" type="text" placeholder="请输入文章题目关键字" ref="searchBox">
+            <input class="search-box" type="text" placeholder="请输入文章题目关键字" ref="searchBox"
+                @keyup.enter="inputDataFilterFn">
             <div class="search-btn" @click.prevent="inputDataFilterFn">
                 <van-icon name="search" size="2rem" />
             </div>
@@ -44,7 +45,7 @@ import { useRouter } from 'vue-router';
 import useArticles from '../../../stores/module/articles';
 const searchBox = ref(null);
 
-defineProps({
+const props = defineProps({
     tags: {
         type: Array,
         required: true
@@ -62,14 +63,22 @@ const store = useArticles();
 
 const setDataFn = (arg1, arg2) => {
     let data = [];
+    let filterArticles = []
     store.fetchArticles().then(res => {
-        res.filter(item => {
+        res.forEach(item => {
+            data.push(...item.articles);
+        })
+        data.filter(item => {
             if (item[arg1] === arg2) {
-                data.push(item);
+                filterArticles.push(item);
             }
         })
-        store.setArticles(data);
-        router.push('/home');
+        store.setArticles(filterArticles);
+        if (filterArticles.length) {
+            router.push('/home');
+        } else {
+            return;
+        }
     })
 }
 
@@ -83,15 +92,23 @@ const filterTagFn = tag => {
 
 const inputDataFilterFn = async () => {
     let data = [];
+    let articles = [];
     await store.fetchArticles().then(res => {
-        res.filter(item => {
+        res.forEach(item => {
+            articles.push(...item.articles);
+        })
 
+        articles.filter(item => {
             if (item.title.search(searchBox.value.value) !== -1) {
                 data.push(item);
+            } else {
+                return;
             }
         })
         store.setArticles(data);
-        router.push('/home');
+        if (data.length !== 0) {
+            router.push('/home');
+        }
     })
 }
 

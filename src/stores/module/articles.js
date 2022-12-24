@@ -7,11 +7,11 @@ const useArticles = defineStore('articles', {
         articles: []
     }),
     actions: {
-        setArticles(playload) {
-            this.articles = playload;
+        setArticles(payload) {
+            this.articles = payload;
         },
         async fetchArticles() {
-            const res = await API_articles();
+            let res = await API_articles()
             return res;
         }
     }

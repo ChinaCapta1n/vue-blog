@@ -46,11 +46,15 @@ const summaryFilterFn = summary => {
 }
 
 API_articles().then(res => {
-    console.log(articleFilterData.articles)
+    let data = [];
+    res.forEach(item => {
+        data.push(...item.articles);
+    })
+
     if (articleFilterData.articles.length) {
         articleData.value = articleFilterData.articles
     } else {
-        articleData.value = res;
+        articleData.value = data;
     }
 
 })

@@ -19,8 +19,8 @@
 	},
 	{
 		"id": 3,
-		"text": "标签",
-		"path": "/tags",
+		"text": "查找",
+		"path": "/search",
 		"icon": "comment-o"
 	}
 ]

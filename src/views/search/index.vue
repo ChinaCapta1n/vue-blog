@@ -15,7 +15,13 @@ const category = ref([]);
 
 onMounted(async () => {
     const res = await API_tags();
-    res.filter(t => {
+
+    let data = [];
+
+    res.forEach(item => {
+        data.push(...item.articles);
+    })
+    data.filter(t => {
         if (category.value.indexOf(t.category) === -1) {
             category.value.push(t.category.toLowerCase());
         }
