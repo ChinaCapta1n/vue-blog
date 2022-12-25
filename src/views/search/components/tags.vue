@@ -120,7 +120,7 @@ const inputDataFilterFn = async () => {
             return;
         }
     })
-    ctiveLink();
+    activeLink();
 }
 
 

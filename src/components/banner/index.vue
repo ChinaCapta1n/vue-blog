@@ -1,5 +1,5 @@
 <template>
-    <div class="banner-img">
+    <div class="banner-img banner-height">
         <img :src="backgroundImage" alt="">
     </div>
 </template>

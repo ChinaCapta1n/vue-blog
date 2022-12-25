@@ -17,6 +17,10 @@ const logoText = "luffy";
     color: #fff;
 }
 
+.colorful {
+    color: #000;
+}
+
 .circle-spinning {
     position: relative;
     transform-style: preserve-3d;

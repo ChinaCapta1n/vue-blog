@@ -1,5 +1,5 @@
 <template>
-    <img class="banner-background" src="../../../../assets/images/home-banner/1.jpg" alt="" />
+    <img class="banner-background banner-height" src="../../../../assets/images/home-banner/1.jpg" alt="" />
     <ArrowDown />
 </template>
 <script setup>

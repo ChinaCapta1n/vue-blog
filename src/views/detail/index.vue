@@ -47,6 +47,7 @@ axios.get(`http://localhost:5173/mock/articles/${route.params.id}`).then(res => 
 
         @media screen and (max-width: 768px) {
             border-color: #fff;
+            margin-bottom: 0;
         }
 
 

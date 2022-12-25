@@ -1,6 +1,6 @@
 <template>
 	<nav class="nav" :class="topScroll === true ? 'show-or-hide' : '', backgroundFff === true ? 'backgroundFFF' : ''">
-		<logo />
+		<logo :class="backgroundFff === true ? 'colorful' : ''" />
 		<ul class="nav-list" :class="navListShow === true ? 'show' : ''">
 			<li v-for="(nav, index) in navData" :key="nav.id" @click.prevent="handleHamburgerFn">
 				<router-link :class="backgroundFff === true ? 'toGrey' : ''" :to="nav.path" @click="navClickFn"
@@ -26,20 +26,19 @@ import useFlags from '../../stores/module/flags.js';
 import Logo from './components/logo/index.vue';
 import { API_nav } from '../../api';
 
+// whiteList
+const whiteList = ref([]);
+
 // nav data
 const navData = ref(null);
 
-// underline
-// const underLine = ref(null);
-const undelineLeft = ref(null);
-const undelineWidth = ref(null);
 const timer = ref(null);
 
 // scroll bar
 const scrollTop = ref('');
 const store = useFlags();
 const { topScroll } = storeToRefs(store);
-const pageHeight = ref(0);
+const bannerHeight = ref(0);
 const backgroundFff = ref(false);
 
 // hamburger
@@ -47,6 +46,9 @@ const threeLine = ref(false);
 
 // nav-list
 const navListShow = ref(false);
+
+// whitelist function
+
 
 // hamburger function
 const handleHamburgerFn = () => {
@@ -66,29 +68,42 @@ const getStyles = () => {
 
 		underLine.style.width = getComputedStyle(activeRouter, null)["width"];
 		underLine.style.left = activeRouter.offsetLeft + "px";
-		// undelineWidth.value = getComputedStyle(activeRouter, null)["width"];
-		// undelineLeft.value = activeRouter.offsetLeft + "px";
+
 	}
 
 }
 
 const navClickFn = e => {
 
-	const underLine = document.querySelector('.undeline');
-	underLine.style.width = getComputedStyle(e.currentTarget, null)["width"];
-	underLine.style.left = e?.currentTarget?.offsetLeft + "px";
+	whiteList.value.forEach(item => {
+		if (window.location.hash.includes(item)) {
+			const underLine = document.querySelector('.undeline');
+			underLine.style.width = getComputedStyle(e.currentTarget, null)["width"];
+			underLine.style.left = e?.currentTarget?.offsetLeft + "px";
+		}
+	})
 
-	// undelineLeft.value = e?.currentTarget?.offsetLeft + "px";
-	// undelineWidth.value = getComputedStyle(e.currentTarget, null)["width"];
+
+
+	// const underLine = document.querySelector('.undeline');
+	// underLine.style.width = getComputedStyle(e.currentTarget, null)["width"];
+	// underLine.style.left = e?.currentTarget?.offsetLeft + "px";
+
 }
 
 const navMouseOutFn = () => {
-	getStyles();
+
+	whiteList.value.forEach(item => {
+		if (window.location.hash.includes(item)) {
+			getStyles();
+		}
+	})
+
 }
 
 // scroll bar
 const handleScrollFn = () => {
-	pageHeight.value = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+	bannerHeight.value = parseFloat(window.getComputedStyle(document.querySelector('.banner-height'), null).height);
 	scrollTop.value = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 }
 
@@ -104,7 +119,7 @@ watch(scrollTop, (newValue, oldValue) => {
 		}
 	}
 
-	if (newValue > pageHeight.value) {
+	if (newValue > bannerHeight.value) {
 		backgroundFff.value = true;
 	} else {
 		backgroundFff.value = false;
@@ -117,13 +132,18 @@ onMounted(() => {
 	API_nav().then(res => {
 		navData.value = res;
 
+		res.forEach(item => {
+			whiteList.value.push(item.path);
+		})
+
 		// underline
 		timer.value = setTimeout(() => {
-			getStyles();
+			// getStyles();
+			navMouseOutFn();
 		}, 800)
 	})
 	// scroll bar
-	pageHeight.value = window.innerHeight;
+	bannerHeight.value = window.innerHeight;
 	window.addEventListener("scroll", handleScrollFn);
 })
 
@@ -154,6 +174,7 @@ onUnmounted(() => {
 
 	&.backgroundFFF {
 		background: hsla(0, 0%, 100%, .8);
+		border-bottom: 1px solid rgb(237, 233, 233);
 	}
 
 	&.show-or-hide {
@@ -168,9 +189,7 @@ onUnmounted(() => {
 		.undeline {
 			position: absolute;
 			display: block;
-			// width: v-bind(undelineWidth);
 			bottom: -.5rem;
-			// left: v-bind(undelineLeft);
 			height: 1px;
 			background-image: repeating-linear-gradient(45deg,
 					#3c5245 0%,

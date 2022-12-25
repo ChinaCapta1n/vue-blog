@@ -7,7 +7,7 @@
                     <img :src="article.imgCover" alt="">
                 </div>
                 <div class="summary-text">
-                    <p class="summary-createdAt">{{ article.craetedAt }}</p>
+                    <p class="summary-createdAt">{{ formatTime(article.craetedAt) }}</p>
                     <h2 class="summary-title">
                         <router-link :to="'/detail/' + article.article" @click="showNav">
                             {{ article.title }}
@@ -26,10 +26,13 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
-import { API_articles } from '../../../../api/index.js'
+import { ref, onMounted, onUnmounted } from 'vue';
+import { API_articles } from '../../../../api/index.js';
 import useFlags from '../../../../stores/module/flags';
 import useArticles from '../../../../stores/module/articles';
+import { formatTime } from '../../../../utils/format_time';
+
+const data = ref([]);
 
 const articleData = ref([]);
 const singleArticle = ref(null);
@@ -46,15 +49,15 @@ const summaryFilterFn = summary => {
 }
 
 API_articles().then(res => {
-    let data = [];
+
     res.forEach(item => {
-        data.push(...item.articles);
+        data.value.push(...item.articles);
     })
 
     if (articleFilterData.articles.length) {
         articleData.value = articleFilterData.articles
     } else {
-        articleData.value = data;
+        articleData.value = data.value;
     }
 
 })
@@ -81,6 +84,10 @@ onMounted(() => {
         }, 500)
 
     })
+})
+
+onUnmounted(() => {
+    articleFilterData.setArticles([]);
 })
 
 
@@ -115,8 +122,6 @@ onMounted(() => {
             margin-bottom: 10rem;
             opacity: 0;
             transition: all 1s;
-
-
 
             &:hover .summary-img {
                 transform: scale(0.99);
